@@ -1,0 +1,11 @@
+DROP TABLE personal_member;
+
+CREATE TABLE personal_member (
+    userid VARCHAR2(100) PRIMARY KEY,
+    password VARCHAR2(300) NOT NULL,
+    name VARCHAR2(100) NOT NULL,
+    birth VARCHAR2(500),
+    gender VARCHAR2(50) CHECK (gender IN ('Male', 'Female')),
+    email VARCHAR2(500),
+    phone VARCHAR2(500)
+);

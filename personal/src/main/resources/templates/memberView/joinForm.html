@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>JoinForm</title>
+<style>
+	.title {
+		height: 100px;
+		padding-top: 50px;
+		font-size: 30px;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.8);
+		/* background-image: url("img/wave.jpg"); */
+	}
+	
+	.content {
+		text-align: center;
+	}
+	
+	.jointitle {
+		font-size: 17px;
+		text-align: left;
+	}
+	
+	.joinbox {
+    	border: 1px solid #b3b3b3;
+		margin: 10px;
+		width: 400px;
+		height: 30px;
+	}
+	
+	.titlein:link {
+		color: #ffffff;
+		text-decoration: none;
+	}
+	
+	.titlein:visited {
+		color: #ffffff;
+		text-decoration: none;
+	}
+	
+	.titlein:active {
+		color: #ffffff;
+		text-decoration: none;
+	}
+
+	
+	#joinButton {
+		width: 400px;
+		background-color: rgba(0, 0, 0, 0.8);
+		border: none;
+		color: white;
+		padding: 15px 100px;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		font-size: 16px;
+		margin: auto;
+		cursor: pointer;
+		border-radius: 12px;
+	}
+	
+</style>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script>
+	$(document).ready(function() {
+		$('#memberid').keyup(event);
+        $('#submitButton').click(submitButton);
+	});
+</script>
+</head>
+<body>
+	<div class="title"><a th:href="@{/}" class="titlein">Personal</a></div>
+	<br>
+	<form th:action="@{/member/join}" method="post">
+	<div class="content">
+		<b><label for="userid" class="jointitle">ID</label></b><br>
+		<input type="text" id="userid" name="userid" class="joinbox"><br>
+		<br>
+		
+		<b><label for="password" class="jointitle">Password</label></b><br>
+		<input type="password" id="password" name="password" class="joinbox"><br>
+		<br>
+		
+		<b><label for="password1" class="jointitle">Password Check</label></b><br>
+		<input type="password" id="password1" class="joinbox"><br>
+		<br>
+		
+		<b><label for="name" class="jointitle">Name</label></b><br>
+		<input type="text" id="name" name="name" class="joinbox"><br>
+		<br>
+		
+		<b><label for="birth" class="jointitle">Birth</label></b><br>
+		<input type="text" id="birth" name="birth" class="joinbox"><br>
+		<br>
+		
+		<b><label for="gender" class="jointitle">Gender</label></b><br>
+		<input type="text" id="gender" name="gender" class="joinbox"><br>
+		<br>
+		
+		<b><label for="email" class="jointitle">Email</label></b><br>
+		<input type="text" id="email" name="email" class="joinbox"><br>
+		<br>
+		
+		<b><label for="phone" class="jointitle">Phone</label></b><br>
+		<input type="text" id="phone" name="phone" class="joinbox"><br>
+		
+		<p><input type="submit" value="Join" id="joinButton"></p>
+	</div>
+	</form>
+</body>
+</html>

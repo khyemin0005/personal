@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>LoginForm</title>
+<style>
+	.top {
+		height: 100px;
+		padding-top: 50px;
+		font-size: 30px;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.8);
+		/* background-image: url("img/wave.jpg"); */
+	}
+	
+	.title:link {color: #ffffff; text-decoration: none;}
+	.title:visited {color: #ffffff; text-decoration: none;}
+	.title:active {color: #ffffff; text-decoration: none;}
+	
+	
+	.middle {
+		width: 500px;
+    	border: 2px solid #dae1e6;
+		padding-top: 30px;
+		padding-bottom: 20px;
+		margin: auto auto;
+		text-align: center;
+	}
+	
+	.loginTable {
+		text-align: center;
+		margin: auto;
+	}
+	
+	.jointitle {
+		font-size: 17px;
+		text-align: left;
+	}
+	
+	.joinbox {
+    	border: 1px solid #b3b3b3;
+		margin: 10px;
+		width: 350px;
+		height: 30px;
+	}
+	
+	img {
+		width: 30px;
+	}
+	
+	
+	.bottom {
+		margin: 10px;
+		text-align: center;
+	}
+	
+	#loginButton {
+		width: 400px;
+		background-color: rgba(0, 0, 0, 0.8);
+		border: none;
+		color: white;
+		padding: 15px 100px;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		font-size: 16px;
+		margin: auto;
+		cursor: pointer;
+		border-radius: 12px;
+	}
+	
+	#joinButton {
+		color: #666666;
+	}
+	a:link {
+		color: #000000;
+		text-decoration: none;
+	}
+	a:visited {
+		color: #000000;
+		text-decoration: none;
+	}
+	#joinButton:hover {
+		text-decoration: underline;
+	}
+	
+</style>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script>
+	$(document).ready(function() {
+		$('#memberid').keyup(event);
+        $('#submitButton').click(submitButton);
+	});
+</script>
+</head>
+<body>
+	<div class="top"><a th:href="@{/}" class="title">Personal</a></div>
+	<br>
+	
+	<form th:action="@{/member/login}" method="post">
+	<div class="middle">
+	<table class="loginTable">
+		<tr>
+			<th><img th:src="@{/img/id.png}"></th>
+			<td><input type="text" id="userid" name="userid" placeholder="ID" class="joinbox"></td>
+		</tr>
+		<tr>
+			<th><img th:src="@{/img/password.png}"></th>
+			<td><input type="password" id="password" name="password" placeholder="Password" class="joinbox"></td>
+		</tr>
+	</table>
+	<br>
+	<p><input type="submit" value="Login" id="loginButton"></p>
+	</div>
+	</form>
+	
+	<div class="bottom">
+		<a th:href="@{/member/joinForm}" id="joinButton">Search Password</a>  |
+		<a th:href="@{/member/joinForm}" id="joinButton">Search ID</a>  |
+		<a th:href="@{/member/joinForm}" id="joinButton">Join</a>
+	</div>
+</body>
+</html>

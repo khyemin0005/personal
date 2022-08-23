@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>home</title>
+<style>
+	.title {
+		height: 100px;
+		padding-top: 50px;
+		font-size: 30px;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.8);
+		/* background-image: url("img/wave.jpg"); */
+	}
+	.menu {
+		margin: 10px 20px;
+	}
+	
+	/* ************************************************************************ */
+	
+	.logoutMember {
+		width: 300px;
+		height: 120px;
+		float: right;
+    	background-color: #f7f9fa;
+    	border: 1px solid #dae1e6;
+	}
+	
+	.center {
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	#loginButton {
+		background-color: rgba(0, 0, 0, 0.8);
+		border: none;
+		color: white;
+		padding: 15px 100px;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+		border-radius: 12px;
+	}
+	
+	#joinButton {
+		color: #666666;
+		text-align: right;
+		display: inline-block;
+	}
+	
+	/* ************************************************************************ */
+	
+	.loginMember {
+		width: 300px;
+		height: 120px;
+		float: right;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+    	background-color: #f7f9fa;
+    	border: 1px solid #dae1e6;
+	}
+	
+	table, tr, td {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+	
+	#logoutButton {
+		background-color: #d9d9d9;
+		border: none;
+		color: white;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		cursor: pointer;
+		border-radius: 40px;
+	}
+	
+	/* ************************************************************************ */
+	
+	a:link {color: #000000; text-decoration: none;}
+	a:visited {color: #000000; text-decoration: none;}
+	#joinButton:hover {text-decoration: underline;}
+	
+</style>
+</head>
+<body>
+	<div class="header">
+		<div class="title"><a th:href="@{/}" style="color: white">Personal</a></div>
+		
+		<hr>
+		<div class="menu">
+			<b><a th:href="@{/}">home</a> |</b>
+			<b><a th:href="@{/board/list}">board</a></b>
+		</div>
+		<hr>
+	</div>
+	
+	<div sec:authorize="not isAuthenticated()" class="logoutMember">
+		<div class="center">
+			<a th:href="@{/member/loginForm}"><input type="button" value="Login" id="loginButton"></a>
+		</div>
+		<a th:href="@{/member/joinForm}" id="joinButton">Join</a>
+	</div>
+	
+	<div sec:authorize="isAuthenticated()" class="loginMember">
+		<table>
+			<tr>
+				<td rowspan="2"><img th:src="@{/img/account.png}" style="width: 50px"> </td>
+				<th style="width: 140px"><span th:text="${#authentication.name}"></span>님</th>
+				<td rowspan="2"><a th:href="@{/logout}"><input type="button" value="logout" id=logoutButton></a></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

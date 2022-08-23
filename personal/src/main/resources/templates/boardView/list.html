@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>list</title>
+<style>
+	.title {
+		height: 100px;
+		color: #ffffff;
+		padding-top: 50px;
+		font-size: 30px;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.8);
+		/* background-image: url("img/wave.jpg"); */
+	}
+	.menu {
+		margin: 10px 20px;
+	}
+	
+	a:link {
+		color: #000000;
+		text-decoration: none;
+	}
+	
+	a:visited {
+		color: #000000;
+		text-decoration: none;
+	}
+</style>
+</head>
+<body>
+	<div class="header">
+		<div class="title">Board</div>
+		<hr>
+		<div class="menu">
+			<b><a th:href="@{/}">home</a> |</b>
+			<b><a th:href="@{/board/list}">board</a></b>
+		</div>
+		<hr>
+	</div>
+	<a th:href="@{/board/writeBoard}">Write</a>
+	
+</body>
+</html>
