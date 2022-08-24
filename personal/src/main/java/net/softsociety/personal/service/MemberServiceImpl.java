@@ -14,7 +14,6 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int insertMember(Member member) {
-
 		int result = memberDAO.insertMember(member);
 		return result;
 	}
@@ -23,6 +22,12 @@ public class MemberServiceImpl implements MemberService{
 	public Member getMemberInfo(String id) {
 		Member member = memberDAO.selectOne(id);
 		return member;
+	}
+
+	@Override
+	public int countMemberid(String userid) {
+		int result = memberDAO.countMemberid(userid);
+		return result;
 	}
 	
 }
