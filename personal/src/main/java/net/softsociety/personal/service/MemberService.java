@@ -6,6 +6,8 @@ public interface MemberService {
 
 	public int insertMember(Member member);
 
-	public Member getMemberInfo(String id);
+	public Member getMemberInfo(String id); // ?
+
+	public int countMemberid(String userid);
 
 }

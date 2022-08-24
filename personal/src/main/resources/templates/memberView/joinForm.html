@@ -22,7 +22,7 @@
 		text-align: left;
 	}
 	
-	.joinbox {
+	.joinbox, select {
     	border: 1px solid #b3b3b3;
 		margin: 10px;
 		width: 400px;
@@ -60,13 +60,177 @@
 		border-radius: 12px;
 	}
 	
+	#joinButton:disabled {
+		background-color: rgba(0, 0, 0, 0.2);
+		cursor: default;
+	}
+	
+	#idMsg, #pwMsg, #pwMsg1, #nameMsg, #birthMsg, #genderMsg, #emailMsg {
+		color: red;
+		font-size: 14px;
+	}
+	
+	#goodId {
+		color: green;
+		font-size: 14px;
+	}
+	
 </style>
 <script th:src="@{/js/jquery-3.6.0.js}"></script>
 <script>
 	$(document).ready(function() {
-		$('#memberid').keyup(event);
-        $('#submitButton').click(submitButton);
+		
+		$('#userid').focusout(function() {
+			let id = $(this).val();
+			
+			console.log(id);
+			
+			if(id == '') {
+				$('#idMsg').html('Required information.');
+		        $('#goodId').html('');
+			    $('#joinButton').attr('disabled', true);
+				return;
+			} else if (id.length < 5 || id.length > 20) {
+				$('#idMsg').html('Please enter 5 to 20 characters.');
+			    $('#joinButton').attr('disabled', true);
+		        $('#goodId').html('');
+				return;
+			}
+			
+			$.ajax({
+			    url: 'idcheck',
+			    type: 'post',
+			    data: { userid: id },
+			    success: function(n){
+			        if(n == 0){
+						$('#idMsg').html('');
+				        $('#goodId').html('Good ID!');
+						$('#joinButton').attr('disabled', false);
+			        } else {
+						$('#idMsg').html('The ID is already in use.');
+				        $('#goodId').html('');
+					    $('#joinButton').attr('disabled', true);
+					    return;
+					}
+			    },
+		        error: function(e){
+				    $('#idMsg').html(JSON.stringify(e));
+		        }
+			});
+			
+			$('#joinButton').attr('disabled', false);  // 모든 input 조건 충족시 바뀌는건? // 버튼이 안바뀜,... -> # 빼먹음...
+		});
+		
+		$('#password').focusout(function() {
+			let pw = $(this).val();
+			
+			console.log(pw);
+			
+			if(pw == '') {
+				$('#pwMsg').html('Required information.');
+				return;
+			} else if (pw.length < 8 || pw.length > 16) {
+				$('#pwMsg').html('Please enter 8 to 16 characters.');
+				return;
+			} else {
+				$('#pwMsg').html('');
+			}
+			
+		});
+		
+		$('#password1').focusout(function() {
+			let pw = $('#password').val();
+			let pw1 = $(this).val();
+			
+			console.log(pw);
+			console.log(pw1);
+
+			if(pw1 == '') {
+				$('#pwMsg1').html('Required information.');
+				return;
+			} else if(pw1 != pw) {
+				$('#pwMsg1').html('Passwords do not match.');
+				return;
+			} else {
+				$('#pwMsg1').html('');
+			}
+			
+		});
+		
+		$('#name').focusout(function() {
+			let name = $('#name').val();
+			
+			console.log(name);
+			
+			if(name == '') {
+				$('#nameMsg').html('Required information.');
+				return;
+			} else {
+				$('#nameMsg').html('');
+			}
+			
+		});
+		
+		$('#birth') // 1. 년도가 4자리가 아닐 때 : 태어난 년도 4자리를 정확하게 입력하세요.
+					// 2. 년도 4자리 입력 시 : 태어난 월을 선택하세요.
+					// 3. 년도 월 선택 시 : 태어난 일(날짜) 2자리를 정확하게 입력하세요.
+					// 4. 0000~1922 입력 시 : 정말이세요?
+					// 5. 만 14세 미만일 경우 : 만 14세 미만의 어린이는 보호자 동의가 필요합니다.
+					// 6. 미래 년도 선택 시 : 미래에서 오셨군요. ^^
+		
+		$('#genderDefault').click(function() { // 성별을 클릭했을 경우 메시지 출력
+			$('#genderMag').html('Required information.');
+		});
+		
+		$('#email').focusout(function() {
+			let email = $('#email').val();
+			
+			console.log(email);
+			
+			if(email) { // __@__.__이 아니라면 메시지 출력
+				$('#emailMsg').html('Please check your email address again.');
+				return;
+			} else {
+				$('#emailMsg').html('');
+			}
+		})
+		
+        $('#joinButton').mouseenter(joinButton); // ???
 	});
+	
+	function joinButton() {
+		let id = $('#userid').val();
+		let pw = $('#password').val();
+		let name = $('#name').val();
+		let birth = $('#birth').val();
+		let gender = $('#gender').val();
+		let email = $('#email').val();
+		let phone = $('#phone').val();
+		
+		if(id == '' || pw == '' || name == '' || birth == '' || gender == '' || email == '' || phone == '') {
+		    $('#joinButton').attr('disabled', true);
+			return;
+		}
+		
+		if(id != null && pw != null && name != null && birth != null && gender != null && email != null && phone != null) {
+			$('#joinButton').attr('disabled', false);
+		}
+		
+		$.ajax({ // 여기로 못오는데
+			url: 'join',
+			type: 'post',
+			data: {memberid: memberid, name: name}, // $('#writeForm').serialize(), // 왜 안되냐...
+			success: function() {
+				alert('가입되었습니다.'); // location.reload();
+				$('#memberid').val('')
+				$('#name').val('');
+			},
+			error: function() {
+				alert('가입 실패');
+	            alert(JSON.stringify(e));
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -76,36 +240,53 @@
 	<div class="content">
 		<b><label for="userid" class="jointitle">ID</label></b><br>
 		<input type="text" id="userid" name="userid" class="joinbox"><br>
+		<div id="idMsg"></div><div id="goodId"></div>
 		<br>
 		
 		<b><label for="password" class="jointitle">Password</label></b><br>
 		<input type="password" id="password" name="password" class="joinbox"><br>
+		<div id="pwMsg"></div>
 		<br>
 		
-		<b><label for="password1" class="jointitle">Password Check</label></b><br>
-		<input type="password" id="password1" class="joinbox"><br>
+		<b><label for="password1" class="jointitle">Check Password</label></b><br>
+		<input type="password" id="password1" name="password1" class="joinbox"><br>
+		<div id="pwMsg1"></div>
 		<br>
 		
 		<b><label for="name" class="jointitle">Name</label></b><br>
 		<input type="text" id="name" name="name" class="joinbox"><br>
+		<div id="nameMsg"></div>
 		<br>
 		
 		<b><label for="birth" class="jointitle">Birth</label></b><br>
 		<input type="text" id="birth" name="birth" class="joinbox"><br>
+		<div id="birthMsg"></div>
 		<br>
 		
-		<b><label for="gender" class="jointitle">Gender</label></b><br>
+		<!-- <b><label for="gender" class="jointitle">Gender</label></b><br>
 		<input type="text" id="gender" name="gender" class="joinbox"><br>
+		<div id="genderMsg"></div>
+		<br> -->
+		
+		<b><label for="gender" class="jointitle">Gender</label></b><br>
+		<select name="gender" id="gender">
+			<option id="genderDefault">성별</option>
+			<option value="Male" id="male">남자</option>
+			<option value="Female" id="female">여자</option>
+		</select><br>
+		<div id="genderMsg"></div>
 		<br>
 		
 		<b><label for="email" class="jointitle">Email</label></b><br>
 		<input type="text" id="email" name="email" class="joinbox"><br>
+		<div id="emailMsg"></div>
 		<br>
 		
 		<b><label for="phone" class="jointitle">Phone</label></b><br>
 		<input type="text" id="phone" name="phone" class="joinbox"><br>
+		<div id="phoneMsg"></div>
 		
-		<p><input type="submit" value="Join" id="joinButton"></p>
+		<p><input type="submit" value="Join" id="joinButton" disabled="disabled"></p>
 	</div>
 	</form>
 </body>

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 import net.softsociety.personal.domain.Member;
@@ -35,6 +37,16 @@ public class MemberController { // service -> serviceImpl에 implements // Impl�
 	public String loginForm() {
 		log.debug("Move to loginForm");
 		return "/memberView/loginForm";
+	}
+	
+	//ID검색
+	@ResponseBody
+	@PostMapping("idcheck")
+	public int idcheck(String userid) {
+		log.debug("Userid: {}", userid);
+		int cnt = 0;
+		cnt = service.countMemberid(userid);
+		return cnt;
 	}
 
 }

@@ -25,7 +25,7 @@ public class WebSecurityConfig {
         http.csrf().disable()
         .authorizeRequests()
         .antMatchers("/", // 로그인 하지 않은 사람도 접속 가능한 경로
-        		"/member/join",
+        		"/member/joinForm",
         		"/member/idcheck",
                 "/board/list",
                 "/board/read",

@@ -27,5 +27,9 @@
 		)
 </insert>
 
+<!-- ID 개수 확인 -->
+<select id="countMemberid" parameterType="String" resultType="int">
+	SELECT count(*) FROM personal_member WHERE userid = #{rid}
+</select>
 
 </mapper>

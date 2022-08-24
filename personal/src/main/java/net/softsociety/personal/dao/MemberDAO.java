@@ -11,4 +11,6 @@ public interface MemberDAO {
 
 	public Member selectOne(String id);
 
+	public int countMemberid(String userid);
+
 }
