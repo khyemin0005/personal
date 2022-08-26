@@ -26,6 +26,24 @@
 		color: #000000;
 		text-decoration: none;
 	}
+	
+	#writeButton {
+		margin-right: 100px;
+	}
+	
+	table {
+		width: 80%;
+		text-align: center;
+		margin: auto;
+		border-collapse: collapse;
+	}
+	
+	tr:nth-child(even){background-color: #f2f2f2}
+	
+	th {
+	  background-color: rgba(0, 0, 0, 0.8);
+	  color: white;
+	}
 </style>
 </head>
 <body>
@@ -38,7 +56,23 @@
 		</div>
 		<hr>
 	</div>
-	<a th:href="@{/board/writeBoard}">Write</a>
+	<p><a th:href="@{/board/writeBoard}" id="writeButton"><img th:src="@{/img/write.png}" style="width: 20px;">Write</a></p>
 	
+	<table>
+		<tr>
+			<th>NUM</th>
+			<th>ID</th>
+			<th>TITLE</th>
+			<th>DATE</th>
+			<th>HITS</th>
+		</tr>
+		<tr th:each="list : ${list}">
+			<td th:text="${list.boardnum}"></td>
+			<td th:text="${list.userid}"></td>
+			<td th:text="${list.title}"></td>
+			<td th:text="${list.inputdate}"></td>
+			<td th:text="${list.hits}"></td>
+		</tr>
+	</table>
 </body>
 </html>

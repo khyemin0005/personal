@@ -4,5 +4,33 @@
 
 <mapper namespace="net.softsociety.personal.dao.BoardDAO">
 
+<insert id="writeBoard" parameterType="Board">
+	INSERT INTO personal_board
+		(
+			boardnum
+			, userid
+			, title
+			, contents
+			<if test = "originalfile != null and originalfile != ''">
+			, originalfile
+			, savedfile
+			</if>
+		)
+	VALUES
+		(
+			personal_board_seq.NEXTVAL
+			, #{userid}
+			, #{title}
+			, #{contents}
+			<if test = "originalfile != null and originalfile != ''">
+			, #{originalfile}
+			, #{savedfile}
+			</if>
+		)
+</insert>
+
+<select id="selectAll" resultType="Board">
+	SELECT * FROM personal_board ORDER BY boardnum DESC
+</select>
 
 </mapper>

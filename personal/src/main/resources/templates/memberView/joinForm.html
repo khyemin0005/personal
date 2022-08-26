@@ -105,7 +105,6 @@
 			        if(n == 0){
 						$('#idMsg').html('');
 				        $('#goodId').html('Good ID!');
-						$('#joinButton').attr('disabled', false);
 			        } else {
 						$('#idMsg').html('The ID is already in use.');
 				        $('#goodId').html('');
@@ -118,7 +117,8 @@
 		        }
 			});
 			
-			$('#joinButton').attr('disabled', false);  // 모든 input 조건 충족시 바뀌는건? // 버튼이 안바뀜,... -> # 빼먹음...
+			//$('#joinButton').attr('disabled', false);  // 모든 input 조건 충족시 바뀌는건? // 버튼이 안바뀜,... -> # 빼먹음...
+
 		});
 		
 		$('#password').focusout(function() {
@@ -189,9 +189,10 @@
 			
 			if(email) { // __@__.__이 아니라면 메시지 출력
 				$('#emailMsg').html('Please check your email address again.');
+				$('#emailMsg').html('');
 				return;
 			} else {
-				$('#emailMsg').html('');
+				$('#joinButton').attr('disabled', false);
 			}
 		})
 		
@@ -212,7 +213,8 @@
 			return;
 		}
 		
-		if(id != null && pw != null && name != null && birth != null && gender != null && email != null && phone != null) {
+		if(id != null && pw != null && name != null && birth != null && gender != null && phone != null) {
+			alert('eee');
 			$('#joinButton').attr('disabled', false);
 		}
 		
@@ -278,7 +280,7 @@
 		<br>
 		
 		<b><label for="email" class="jointitle">Email</label></b><br>
-		<input type="text" id="email" name="email" class="joinbox"><br>
+		<input type="email" id="email" name="email" class="joinbox" required="required"><br>
 		<div id="emailMsg"></div>
 		<br>
 		
@@ -289,5 +291,6 @@
 		<p><input type="submit" value="Join" id="joinButton" disabled="disabled"></p>
 	</div>
 	</form>
+	
 </body>
 </html>
