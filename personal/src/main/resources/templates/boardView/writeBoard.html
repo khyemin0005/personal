@@ -20,21 +20,88 @@
 	a:link {color: #000000; text-decoration: none;}
 	a:visited {color: #000000; text-decoration: none;}
 	
+	.background {
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+	
 	.content {
 		text-align: center;
+		background-color: #ffffff;
 	}
 	
-	#title {
-		
-	}
-	
-	#content {
+	#contents {
 		width: 80%;
-		height: 500px;
+		height: 350px;
 		resize: none;
 		border: 0 solid black;
 	}
+	
+	#publishButton {
+		width: 40%;
+		background-color: rgba(0, 0, 0, 0.8);
+		border: none;
+		color: #ffffff;
+		cursor: pointer;
+		padding: 15px 100px;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		font-size: 16px;
+		margin: auto;
+		cursor: pointer;
+		border-radius: 12px;
+	}
+	
+	#publishButton:disabled {
+		background-color: rgba(0, 0, 0, 0.2);
+		cursor: default;
+	}
+	
+	#titleMsg, #contentsMsg {
+		color: red;
+		font-size: 14px;
+	}
 </style>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script>
+	$(document).ready(function() {
+		
+		$('#title').focusout(function() {
+			let title = $('#title').val();
+			
+			console.log(title);
+			
+			if(title == '') {
+				$('#titleMsg').html('Please enter the title.');
+			    $('#publishButton').attr('disabled', true);
+				return;
+			} else {
+				$('#titleMsg').html('');
+			}
+		});
+		
+		$('#contents').focusout(function() {
+			let title = $('#title').val();
+			let contents = $('#contents').val();
+			
+			console.log(title);
+			console.log(contents);
+			
+			if(contents == '') {
+				$('#contentsMsg').html('Please enter the contents.');
+			    $('#publishButton').attr('disabled', true);
+				return;
+			} else {
+				if(title != '') {
+					$('#contentsMsg').html('');
+					$('#publishButton').attr('disabled', false);
+				}
+			}
+		});
+		
+	    
+	});
+</script>
 </head>
 <body>
 	<div class="header">
@@ -46,10 +113,18 @@
 		</div>
 		<hr>
 	</div>
-	<div class="content">
-		<input type="text" placeholder="Title" style="border: 0 solid black; width: 80%; height: 50px">
-		<hr style="width: 80%">
-		<textarea id="content" placeholder="Content"></textarea>
+	<div class="background"> <!-- xxx -->
+		<form th:action="@{/board/publish}" method="post" enctype="multipart/form-data">
+			<div class="content">
+				<input type="text" id="title" name="title" placeholder="Title" style="border: 0 solid black; width: 80%; height: 50px">
+				<div id="titleMsg"></div>
+				<hr style="width: 80%">
+				<textarea id="contents" name="contents" placeholder="Content"></textarea>
+				<div id="contentsMsg"></div>
+				<hr style="width: 80%;">
+				<input type="submit" value="Publish" id="publishButton" disabled="disabled">
+			</div>
+		</form>
 	</div>
 </body>
 </html>
