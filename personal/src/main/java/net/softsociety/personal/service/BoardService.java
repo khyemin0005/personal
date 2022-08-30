@@ -10,4 +10,6 @@ public interface BoardService {
 
 	public ArrayList<Board> selectAll();
 
+	public Board selectOne(int boardnum);
+
 }

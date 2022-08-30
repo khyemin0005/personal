@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Read</title>
+<style>
+	.title {
+		height: 100px;
+		color: #ffffff;
+		padding-top: 50px;
+		font-size: 30px;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.8);
+		/* background-image: url("img/wave.jpg"); */
+	}
+	.menu {
+		margin: 10px 20px;
+	}
+	
+	a:link {
+		color: #000000;
+		text-decoration: none;
+	}
+	
+	a:visited {
+		color: #000000;
+		text-decoration: none;
+	}
+	
+	
+	.background {
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+	
+	.margin {
+		margin-left: 20%;
+		margin-right: 20%;
+	}
+	
+	
+	.inputReply {
+		margin-left: 25%;
+		margin-right: 25%;
+		border: 1px solid rgba(0, 0, 0, 0.6);
+	}
+	
+	table {
+		text-align: left;
+		width: 100%;
+	}
+	
+	#replyUser {
+		padding-left: 10px;
+	}
+	
+	#replyText {
+		padding-left: 10px;
+		width: 95%;
+		resize: none;
+		border: 0 solid black;
+	}
+	
+	#registration {
+		border: 0 solid black;
+		background-color: white;
+		cursor: pointer;
+		margin: auto;
+	}
+</style>
+</head>
+<body>
+	<div class="header">
+		<div class="title">Read</div>
+		<hr>
+		<div class="menu">
+			<b><a th:href="@{/}">home</a> |</b>
+			<b><a th:href="@{/board/list}">board</a></b>
+		</div>
+		<hr>
+	</div>
+	
+	<div class="margin">
+		<p th:text="${board.title}" style="font-size: 30px"></p>
+		<p th:text="${board.userid}"></p> <p th:text="${board.inputdate}" style="color: #bfbfbf"></p>
+	</div>
+	
+	<hr style="width: 60%;">
+	
+	<br>
+	<div class="margin">
+		<p th:text="${board.contents}"></p>
+	</div>
+	<br>
+	
+	<hr style="width: 60%;">
+
+	<form th:action="@{/reply/inputReply}" method="post">	
+		<div class="inputReply">
+			<table>
+				<tr>
+					<td th:text="${#authentication.name}" id="replyUser"></td>
+				</tr>
+				<tr>
+					<td><textarea id="replyText"></textarea></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Registration" id="registration"></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</body>
+</html>

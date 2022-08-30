@@ -69,7 +69,7 @@
 		<tr th:each="list : ${list}">
 			<td th:text="${list.boardnum}"></td>
 			<td th:text="${list.userid}"></td>
-			<td th:text="${list.title}"></td>
+			<td><a th:text="${list.title}" th:href="@{/board/read(boardnum=${list.boardnum})}"></a></td>
 			<td th:text="${list.inputdate}"></td>
 			<td th:text="${list.hits}"></td>
 		</tr>

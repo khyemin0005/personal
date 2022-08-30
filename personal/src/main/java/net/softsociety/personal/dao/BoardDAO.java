@@ -13,4 +13,6 @@ public interface BoardDAO {
 
 	public ArrayList<Board> selectAll();
 
+	public Board selectOne(int boardnum);
+
 }
