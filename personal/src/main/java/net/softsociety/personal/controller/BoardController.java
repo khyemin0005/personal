@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 import net.softsociety.personal.domain.Board;
@@ -62,5 +63,23 @@ public class BoardController {
 		
 		return "redirect:list";
 	}
+	
+	@GetMapping("read")
+	public String read(Model model
+			, @RequestParam(name="boardnum", defaultValue="0") int boardnum) {
+		log.debug("Boardnum: {}", boardnum);
+		
+		Board board = service.selectOne(boardnum);
+		log.debug("Board: {}", board);
+		
+		if(boardnum == 0) {
+			return "redirect:/";
+		}
+		
+		model.addAttribute("board", board);
+		
+		return "/boardView/read";
+	}
+	
 	
 }

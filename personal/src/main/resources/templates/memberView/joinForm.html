@@ -129,8 +129,8 @@
 			if(pw == '') {
 				$('#pwMsg').html('Required information.');
 				return;
-			} else if (pw.length < 8 || pw.length > 16) {
-				$('#pwMsg').html('Please enter 8 to 16 characters.');
+			} else if (pw.length < 4 || pw.length > 16) { // 8
+				$('#pwMsg').html('Please enter 4 to 16 characters.');
 				return;
 			} else {
 				$('#pwMsg').html('');
@@ -187,36 +187,39 @@
 			
 			console.log(email);
 			
-			if(email) { // __@__.__이 아니라면 메시지 출력
+			if(email == '') { // __@__.__이 아니라면 메시지 출력
 				$('#emailMsg').html('Please check your email address again.');
-				$('#emailMsg').html('');
 				return;
 			} else {
-				$('#joinButton').attr('disabled', false);
+				$('#emailMsg').html('');
 			}
 		})
 		
-        $('#joinButton').mouseenter(joinButton); // ???
+		$('#phone').focusout(function() {
+			let id = $('#userid').val();
+			let pw = $('#password').val();
+			let name = $('#name').val();
+			let birth = $('#birth').val();
+			let gender = $('#gender').val();
+			let email = $('#email').val();
+			let phone = $('#phone').val();
+			
+			if(phone == '') {
+				$('phoneMsg').html('Required information.');
+				return;
+			} else if(id != null && pw != null && name != null && birth != null && gender != null && email != null && phone != null){
+				$('#nameMsg').html('');
+				$('#joinButton').attr('disabled', false); // 활성화
+			}
+			
+		});
+		
+        $('#joinButton').click(joinButton); // ???
 	});
 	
+	
+	
 	function joinButton() {
-		let id = $('#userid').val();
-		let pw = $('#password').val();
-		let name = $('#name').val();
-		let birth = $('#birth').val();
-		let gender = $('#gender').val();
-		let email = $('#email').val();
-		let phone = $('#phone').val();
-		
-		if(id == '' || pw == '' || name == '' || birth == '' || gender == '' || email == '' || phone == '') {
-		    $('#joinButton').attr('disabled', true);
-			return;
-		}
-		
-		if(id != null && pw != null && name != null && birth != null && gender != null && phone != null) {
-			alert('eee');
-			$('#joinButton').attr('disabled', false);
-		}
 		
 		$.ajax({ // 여기로 못오는데
 			url: 'join',
@@ -273,8 +276,8 @@
 		<b><label for="gender" class="jointitle">Gender</label></b><br>
 		<select name="gender" id="gender">
 			<option id="genderDefault">성별</option>
-			<option value="Male" id="male">남자</option>
-			<option value="Female" id="female">여자</option>
+			<option value="Male" name="Male" id="male">남자</option>
+			<option value="Female" name="Female" id="female">여자</option>
 		</select><br>
 		<div id="genderMsg"></div>
 		<br>
