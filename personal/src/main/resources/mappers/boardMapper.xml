@@ -37,4 +37,26 @@
 	SELECT * FROM personal_board WHERE boardnum = #{boardnum}
 </select>
 
+
+<insert id="inputReply" parameterType="Reply">
+	INSERT INTO personal_reply
+		(
+			replynum
+			, boardnum
+			, userid
+			, replytext
+		)
+	VALUES
+		(
+			personal_reply_seq.NEXTVAL
+			, #{boardnum}
+			, #{userid}
+			, #{replytext}
+		)
+</insert>
+
+<select id="selectReply" resultType="Reply" parameterType="int">
+	SELECT * FROM personal_reply WHERE boardnum = #{boardnum}
+</select>
+
 </mapper>

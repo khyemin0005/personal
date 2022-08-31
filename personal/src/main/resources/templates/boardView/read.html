@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Read</title>
@@ -38,6 +39,14 @@
 	}
 	
 	
+	.selectReply {
+		margin-left: 25%;
+		margin-right: 25%;
+		
+	}
+	
+	table:nth-child(even){background-color: #f2f2f2}
+	
 	.inputReply {
 		margin-left: 25%;
 		margin-right: 25%;
@@ -53,7 +62,7 @@
 		padding-left: 10px;
 	}
 	
-	#replyText {
+	.replyText {
 		padding-left: 10px;
 		width: 95%;
 		resize: none;
@@ -64,9 +73,13 @@
 		border: 0 solid black;
 		background-color: white;
 		cursor: pointer;
-		margin: auto;
 	}
 </style>
+<script>
+	function login() {
+		window.open('loginForm', 'win', 'left=600,top=300,width=400,height=300,menubar=no')
+	}
+</script>
 </head>
 <body>
 	<div class="header">
@@ -93,21 +106,52 @@
 	<br>
 	
 	<hr style="width: 60%;">
-
-	<form th:action="@{/reply/inputReply}" method="post">	
-		<div class="inputReply">
-			<table>
-				<tr>
-					<td th:text="${#authentication.name}" id="replyUser"></td>
-				</tr>
-				<tr>
-					<td><textarea id="replyText"></textarea></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Registration" id="registration"></td>
-				</tr>
-			</table>
-		</div>
-	</form>
+	
+	<!-- selectReply -->
+	<div class="selectReply">
+		<table th:each="reply : ${reply}">
+			<tr>
+				<th th:text="${reply.userid}"></th>
+			</tr>
+			<tr>
+				<td th:text="${reply.replytext}"></td>
+			</tr>
+			<tr>
+				<td th:text="${reply.inputdate}" style="border-bottom: 1px solid rgba(0, 0, 0, 0.6);"></td>
+			</tr>
+		</table>
+		<br>
+	</div>
+	
+	<!-- inputReply -->
+	<br>
+	<div sec:authorize="isAuthenticated()">
+		<form th:action="@{/board/inputReply}" method="post">	
+			<input type="hidden" name="boardnum" th:value="${board.boardnum}">
+			<div class="inputReply">
+				<table>
+					<tr>
+						<td th:text="${#authentication.name}" id="replyUser"></td>
+					</tr>
+					<tr>
+						<td><textarea class="replyText" name="replytext"></textarea></td>
+					</tr>
+					<tr>
+						<th style="text-align: right; border-top: 1px solid rgba(0, 0, 0, 0.6);"><input type="submit" value="Registration" id="registration"></th>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>
+	
+	<div sec:authorize="not isAuthenticated()" class="inputReply">
+		<table>
+			<tr>
+				<td><a href="|javascript:login()|"><textarea class="replyText" placeholder="Please log in to write comments." readonly="readonly"></textarea></a></td>
+				<!-- window.open으로 로그인 창 띄우기 -->
+			</tr>
+		</table>
+	</div>
+	
 </body>
 </html>
