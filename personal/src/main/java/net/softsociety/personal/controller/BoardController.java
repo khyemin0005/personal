@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 import net.softsociety.personal.domain.Board;
+import net.softsociety.personal.domain.Reply;
 import net.softsociety.personal.service.BoardService;
 
 @Slf4j
@@ -76,10 +77,27 @@ public class BoardController {
 			return "redirect:/";
 		}
 		
+		ArrayList<Reply> reply = service.selectReply(boardnum);
+		
 		model.addAttribute("board", board);
+		model.addAttribute("reply", reply);
 		
 		return "/boardView/read";
 	}
 	
+	
+	@PostMapping("inputReply")
+	public String inputReply(Reply reply
+			, @AuthenticationPrincipal UserDetails user) {
+		
+		String id = user.getUsername();
+		reply.setUserid(id);
+		log.debug("ID: {}", id);
+		
+		log.debug("Reply: {}", reply);
+		service.inputReply(reply);
+		
+		return "redirect:/boardView/read?boardnum=" + reply.getBoardnum();
+	}
 	
 }
