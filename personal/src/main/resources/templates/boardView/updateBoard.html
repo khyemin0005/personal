@@ -1,10 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Update Board</title>
+<style>
+	.title {
+		height: 100px;
+		color: #ffffff;
+		padding-top: 50px;
+		font-size: 30px;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.8);
+		/* background-image: url("img/wave.jpg"); */
+	}
+	.menu {
+		margin: 10px 20px;
+	}
+	
+	a:link {color: #000000; text-decoration: none;}
+	a:visited {color: #000000; text-decoration: none;}
+	
+	.background {
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+	
+	.content {
+		text-align: center;
+		background-color: #ffffff;
+	}
+	
+	#contents {
+		width: 80%;
+		height: 350px;
+		resize: none;
+		border: 0 solid black;
+	}
+	
+	#updateButton {
+		background-color: rgba(0, 0, 0, 0.8);
+		border: none;
+		color: #ffffff;
+		cursor: pointer;
+		padding: 15px 100px;
+		text-align: center;
+		text-decoration: none;
+		display: block;
+		font-size: 16px;
+		margin: auto;
+		cursor: pointer;
+		border-radius: 12px;
+	}
+	
+	#updateButton:disabled {
+		background-color: rgba(0, 0, 0, 0.2);
+		cursor: default;
+	}
+	
+	#titleMsg, #contentsMsg {
+		color: red;
+		font-size: 14px;
+	}
+</style>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script>
+	$(document).ready(function() {
+		
+		$('#title').focusout(function() {
+			let title = $('#title').val();
+			
+			console.log(title);
+			
+			if(title == '') {
+				$('#titleMsg').html('Please enter the title.');
+			    $('#publishButton').attr('disabled', true);
+				return;
+			} else {
+				$('#titleMsg').html('');
+			}
+		});
+		
+		$('#contents').focusout(function() {
+			let title = $('#title').val();
+			let contents = $('#contents').val();
+			
+			console.log(title);
+			console.log(contents);
+			
+			if(contents == '') {
+				$('#contentsMsg').html('Please enter the contents.');
+			    $('#publishButton').attr('disabled', true);
+				return;
+			} else {
+				if(title != '') {
+					$('#contentsMsg').html('');
+					$('#publishButton').attr('disabled', false);
+				}
+			}
+		});
+	});
+</script>
 </head>
 <body>
+	<div class="header">
+		<div class="title">Update</div>
+		<hr>
+		<div class="menu">
+			<b><a th:href="@{/}">home</a> |</b>
+			<b><a th:href="@{/board/list}">board</a></b>
+		</div>
+		<hr>
+	</div>
+	<div class="background">
+		<form th:action="@{/board/updateBoard}" method="post" enctype="multipart/form-data">
+			<div class="content">
+				<input type="text" id="title" name="title" placeholder="Title" style="border: 0 solid black; width: 80%; height: 50px">
+				<div id="titleMsg"></div>
+				<hr style="width: 80%">
+				<textarea id="contents" name="contents" placeholder="Content"></textarea>
+				<div id="contentsMsg"></div>
+				<hr style="width: 80%;">
+				<input type="submit" value="Update" id="updateButton" disabled="disabled">
+			</div>
+		</form>
+	</div>
 
 </body>
 </html>
