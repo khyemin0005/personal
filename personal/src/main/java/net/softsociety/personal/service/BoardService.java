@@ -19,4 +19,6 @@ public interface BoardService {
 
 	public ArrayList<Reply> selectReply(int boardnum);
 
+	public int deleteBoard(Board board);
+
 }

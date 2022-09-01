@@ -39,6 +39,12 @@
 	}
 	
 	
+	.authority {
+		text-align: right;
+		padding-right: 20%;
+	}
+	
+	
 	.selectReply {
 		margin-left: 25%;
 		margin-right: 25%;
@@ -79,6 +85,12 @@
 	function login() {
 		window.open('loginForm', 'win', 'left=600,top=300,width=400,height=300,menubar=no')
 	}
+	
+	function deleteBoard(boardnum) {
+		if(confirm('Are you sure you want to delete it?')) {
+			location.href='deleteBoard?boardnum=' + boardnum;
+		};
+	}
 </script>
 </head>
 <body>
@@ -92,6 +104,8 @@
 		<hr>
 	</div>
 	
+	<br>
+	<hr style="width: 60%;">
 	<div class="margin">
 		<p th:text="${board.title}" style="font-size: 30px"></p>
 		<p th:text="${board.userid}"></p> <p th:text="${board.inputdate}" style="color: #bfbfbf"></p>
@@ -106,6 +120,13 @@
 	<br>
 	
 	<hr style="width: 60%;">
+	
+	<!-- update, delete -->
+	<div th:if="${#authentication.name} == ${board.userid}" class="authority">
+		<a th:href="@{/board/updateBoard(boardnum=${board.boardnum})}">Update</a>
+		<a th:href="|javascript:deleteBoard(${board.boardnum})|">Delete</a>
+		<hr style="margin-left: 25%;">
+	</div>
 	
 	<!-- selectReply -->
 	<div class="selectReply">

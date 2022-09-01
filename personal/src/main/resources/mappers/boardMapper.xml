@@ -37,6 +37,10 @@
 	SELECT * FROM personal_board WHERE boardnum = #{boardnum}
 </select>
 
+<delete id="deleteBoard" parameterType="Board">
+	DELETE FROM personal_board WHERE boardnum = #{boardnum} AND userid = #{userid}
+</delete>
+
 
 <insert id="inputReply" parameterType="Reply">
 	INSERT INTO personal_reply

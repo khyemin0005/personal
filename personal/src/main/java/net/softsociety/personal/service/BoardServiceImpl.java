@@ -45,4 +45,10 @@ public class BoardServiceImpl implements BoardService{
 		return list;
 	}
 
+	@Override
+	public int deleteBoard(Board board) {
+		int result = boardDAO.deleteBoard(board);
+		return result;
+	}
+
 }

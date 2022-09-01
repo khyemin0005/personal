@@ -100,4 +100,27 @@ public class BoardController {
 		return "redirect:/boardView/read?boardnum=" + reply.getBoardnum();
 	}
 	
+	@GetMapping("deleteBoard")
+	public String deleteBoard(int boardnum) {
+		log.debug("Boardnum: {}", boardnum);
+		
+		Board board = service.selectOne(boardnum);
+		log.debug("Board: {}", board);
+		
+		service.deleteBoard(board);
+		
+		return "redirect:list";
+	}
+	
+	@GetMapping("updateBoard")
+	public String updateBoard(Model model, int boardnum) {
+		log.debug("Boardnum: {}", boardnum);
+		
+		Board board = service.selectOne(boardnum);
+		log.debug("Board: {}", board);
+		
+		model.addAttribute("Board", board);
+		
+		return "/boardView/updateBoard";
+	}
 }
